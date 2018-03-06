@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>客户端</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0" colspan="2">
+    <widget class="QLineEdit" name="portLineEdit"/>
+   </item>
+   <item row="0" column="2" rowspan="2">
+    <widget class="QPushButton" name="connectButton">
+     <property name="text">
+      <string>connect</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="2">
+    <widget class="QLineEdit" name="IPLineEdit"/>
+   </item>
+   <item row="2" column="0" colspan="3">
+    <widget class="QTextEdit" name="showText">
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0" colspan="3">
+    <widget class="QTextEdit" name="sendText"/>
+   </item>
+   <item row="4" column="0">
+    <widget class="QPushButton" name="sendButton">
+     <property name="text">
+      <string>send</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>217</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="4" column="2">
+    <widget class="QPushButton" name="closeButton">
+     <property name="text">
+      <string>close</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>closeButton</sender>
+   <signal>clicked()</signal>
+   <receiver>Form</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>348</x>
+     <y>280</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>254</x>
+     <y>376</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
