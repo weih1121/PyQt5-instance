@@ -36,7 +36,7 @@ class Ui_Form(object):
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
-        Form.setWindowTitle(_translate("Form", "服务器(端口号:8000)"))
+        Form.setWindowTitle(_translate("Form", "服务器(端口号:8888)"))
         self.sendButton.setText(_translate("Form", "send"))
         self.closeButton.setText(_translate("Form", "close"))
 

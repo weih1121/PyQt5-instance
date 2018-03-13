@@ -20,6 +20,7 @@ class TcpServer(QWidget, Ui_Form):
         self.tcpServer.listen(QHostAddress.Any, 8888)                 #any默认绑定当前网卡的所有IP
         self.tcpServer.newConnection.connect(self.handleNewConnection)
         self.ui.sendButton.clicked.connect(self.sendMessage)
+        self.ui.closeButton.clicked.connect(self.closeConnect)
 
     def handleNewConnection(self):
         self.tcpSocket = self.tcpServer.nextPendingConnection()       #取出建立好链接的套接字
@@ -37,13 +38,16 @@ class TcpServer(QWidget, Ui_Form):
         stream.setVersion(QDataStream.Qt_5_10)                        #设置数据流所对应的PyQt5版本
         stream.writeQString(message)                                  #向数据流中写入数据，亦即向request中写入数据
         self.tcpSocket.write(self.request)
+        self.ui.sendEdit.clear()                                      #每次数据发送后，将当前的输入text区域清空
 
 
     def showMessage(self):
-        array = self.tcpSocket.readAll()
-        self.ui.showText.append(str(array))
+        stream = QDataStream(self.tcpSocket)                          #发送数据是以QByteArray数据类型发送过来的，所以接收数据也应该以此接收
+        stream.setVersion(QDataStream.Qt_5_10)                        #发送和接收数据以相同的编码形式传输
+        message = stream.readQString()                                #写入使用writeString, 对应读取使用readQString
+        self.ui.showText.append(message)
 
-    def close(self):
+    def closeConnect(self):
         self.tcpSocket.disconnectFromHost()
         self.tcpSocket.close()
 
@@ -51,6 +55,8 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     tcpServer = TcpServer()
     tcpClient = TcpClient()
+    tcpClient.move(100, 100)
+    tcpServer.move(600, 100)
     tcpClient.show()
     tcpServer.show()
     sys.exit(app.exec())
