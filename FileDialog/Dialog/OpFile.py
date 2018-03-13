@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QWidget, QApplication, QFileDialog
-from PyQt5.QtCore import QFile, QIODevice
-from file import Ui_Form
+from Dialog.file import Ui_Form
+from PyQt5.QtCore import QFile, QIODevice, QByteArray
 import sys
 
 class FileOperation(QWidget, Ui_Form):
@@ -39,10 +39,15 @@ class FileOperation(QWidget, Ui_Form):
     def readFile(self):
         fname = QFileDialog.getOpenFileName(self, "ReadFile", "../", "TXT (*.txt)")
         if fname[0]:
-            f = open(fname[0], "r")
-            with f:
-                data = f.read()
-                self.ui.textEdit.setText(data)
+            file = QFile(fname[0])
+            isok = file.open(QIODevice.ReadOnly)
+            if isok:
+                data = file.readAll()
+                print(data)
+                data = bytes(data).de
+                print(data)
+                #self.ui.textEdit.setText(data)
+
 
 
 if __name__ == '__main__':
