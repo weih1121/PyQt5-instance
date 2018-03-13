@@ -21,7 +21,7 @@ class TSStream(QWidget):
     def __init__(self):
         super(TSStream, self).__init__()
         self.setWindowTitle("TextStream 例子")
-        #self.writeFile()
+        self.writeFile()
         self.readFile()
 
     def writeFile(self):
