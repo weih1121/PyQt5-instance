@@ -11,7 +11,6 @@ class OPFile(QWidget):
 
     def WriteFile(self):
         file = QFile("./doc/test.txt")             #创建文件对象
-        #file.setOpenMode(QIODevice.WriteOnly)
         isok = file.open(QIODevice.WriteOnly)      #文件以只写的方式打开
 
         if isok:

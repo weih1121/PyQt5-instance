@@ -9,7 +9,7 @@ class Buffer(QWidget):
 
         self.opbuffer()
 
-    def opbuffer(self):
+    def opBuffer(self):
         memfile = QBuffer()                 #创建内存文件
         memfile.open(QIODevice.WriteOnly)
         memfile.write(QByteArray(1024, "121121121121221222121221212"))
