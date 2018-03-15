@@ -7,7 +7,7 @@ class Buffer(QWidget):
         super(Buffer, self).__init__()
         self.setWindowTitle("Buffer Test")
 
-        self.opbuffer()
+        self.opBuffer()
 
     def opBuffer(self):
         memfile = QBuffer()                 #创建内存文件
