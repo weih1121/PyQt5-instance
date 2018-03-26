@@ -25,7 +25,7 @@ class TcpServer(QWidget, Ui_Form):
     def handleNewConnection(self):
         self.tcpSocket = self.tcpServer.nextPendingConnection()       #取出建立好链接的套接字
         #获取对方IP和端口
-        ip = str(self.tcpSocket.peerAddress())                        #获取对方的IP地址
+        ip = self.tcpSocket.peerAddress().toString()                  #获取对方的IP地址
         port = self.tcpSocket.peerPort()                              #获取对方的端口号
 
         self.ui.showText.setText("[{IP}:{Port}]".format(IP=ip, Port=port))
