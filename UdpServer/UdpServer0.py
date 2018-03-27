@@ -40,10 +40,12 @@ class UdpCommunication(Ui_Form, QWidget):
     #     pass
 
     def handleRecv(self):
+        ip = QHostAddress()
         buf = bytes()
         buf, ip, port = self.udpSocket.readDatagram(1024)
+        ip = ip.toString()
         message = buf.decode()
-        self.ui.textEdit.setText(message)
+        self.ui.textEdit.setText('{Ip},{Port}:{Message}'.format(Ip=ip, Port=port, Message=message))
 
 
 if __name__ == '__main__':

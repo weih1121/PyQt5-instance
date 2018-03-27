@@ -49,7 +49,7 @@ class TcpServer(QWidget, Ui_Form):
 
     def closeConnect(self):
         self.tcpSocket.disconnectFromHost()
-        self.tcpSocket.close
+        self.tcpSocket.close()
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     tcpClient = TcpClient()
