@@ -10,9 +10,9 @@ class UdpCommunication(Ui_Form, QWidget):
         self.ui = Ui_Form()
         self.ui.setupUi(self)
 
-        self.udpSocket = QUdpSocket()                              #socket
+        self.udpSocket = QUdpSocket()                              #创建socket
 
-        self.udpSocket.bind(8888)
+        self.udpSocket.bind(8888)                                  #绑定端口并监听
         self.ui.pushButton_send.clicked.connect(self.handleSend)
         self.udpSocket.readyRead.connect(self.handleRecv)
 
@@ -40,14 +40,10 @@ class UdpCommunication(Ui_Form, QWidget):
     #     pass
 
     def handleRecv(self):
-        buf = None
-        ip = None
-        port = None
+        buf = bytes()
         buf, ip, port = self.udpSocket.readDatagram(1024)
-        print(buf)
-        print(ip)
-        print(port)
-        self.ui.textEdit.setText()
+        message = buf.decode()
+        self.ui.textEdit.setText(message)
 
 
 if __name__ == '__main__':

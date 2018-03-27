@@ -29,9 +29,7 @@ class UdpCommunication(Ui_Form, QWidget):
         ip = self.ui.lineEdit_IP.text()
         port = int(self.ui.lineEdit_PORT.text())
 
-        message = QByteArray()
-        data = QDataStream(message, QIODevice.WriteOnly)
-        data.writeQString(text)
+        message = text.encode()
         self.udpSocket.writeDatagram(message, QHostAddress(ip), port)
 
     # def readDatagram(self, p_int):  # real signature unknown; restored from __doc__
