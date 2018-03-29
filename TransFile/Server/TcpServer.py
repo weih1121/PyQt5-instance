@@ -21,8 +21,8 @@ class Client(QWidget, Ui_Form):
 
         self.tcpserver.listen(QHostAddress.Any, 8888)
         self.tcpserver.newConnection.connect(self.handleNewConnection)
-        #self.ui.pushButton_FileSelection.click.connect(self.SelectFile)
-        # self.ui.pushButton_SendFile.click.connect(self.SendFile)
+        self.ui.pushButton_FileSelection.clicked.connect(self.SelectFile)
+        self.ui.pushButton_SendFile.clicked.connect(self.SendFile)
 
     def handleNewConnection(self):
         self.tcpsocket = QTcpSocket()
@@ -36,7 +36,8 @@ class Client(QWidget, Ui_Form):
         self.tcpsocket.readyRead.connect(self.HandleReceive)
 
     def SelectFile(self):
-        filepath = QFileDialog.getOpenFileName('open', '../', 'ALL (*.*)')
+        filepath, _= QFileDialog.getOpenFileName(self, 'open', '../', 'ALL (*.*)')
+        print(filepath)
         if filepath:
             self.fileName = None
             self.fileSize = 0
@@ -44,10 +45,11 @@ class Client(QWidget, Ui_Form):
             #获取文件信息
             info = QFileInfo(filepath)
             self.fileName = info.fileName()
+            print(self.fileName)
             self.fileSize = info.size()
 
             #只读方式打开文件，指定文件名
-            self.file = QFile()
+            self.file = QFile(filepath)
             isok = self.file.open(QIODevice.ReadOnly)
             if not isok:
                 print('只读方式打开文件失败！')
@@ -63,7 +65,7 @@ class Client(QWidget, Ui_Form):
     def SendFile(self):
         #先发送文件头部信息
         head = "{FileName}##{FileSize}".format(FileName=self.fileName, FileSize=self.fileSize)
-        head.encode(encoding='utf-8')
+        head = bytes(head, encoding='utf-8')
         len = self.tcpsocket.write(head)
         if len > 0:
             #发送真正的文件信息

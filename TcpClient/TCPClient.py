@@ -29,17 +29,25 @@ class TcpClient(QWidget, Ui_Form):
 
     def sendMessage(self):
         message = self.ui.sendText.toPlainText()
-        self.communication = QByteArray()
-        stream = QDataStream(self.communication, QIODevice.WriteOnly)
-        stream.writeQString(message)
-        self.tcpSocket.write(self.communication)
+        # self.communication = QByteArray()
+        # stream = QDataStream(self.communication, QIODevice.WriteOnly)
+        # stream.writeQString(message)
+        # self.tcpSocket.write(self.communication)
+        # self.ui.sendText.clear()
+        message = message.encode(encoding='utf-8')
+        self.tcpSocket.write(message)
         self.ui.sendText.clear()
 
     def showMessage(self):
-        stream = QDataStream(self.tcpSocket)
-        stream.setVersion(QDataStream.Qt_5_10)
-        message = stream.readQString()
-        self.ui.showText.append(message)
+        # stream = QDataStream(self.tcpSocket)
+        # stream.setVersion(QDataStream.Qt_5_10)
+        # message = stream.readQString()
+        # self.ui.showText.append(message)
+        self.message = QByteArray()
+        self.message = self.tcpSocket.readAll()
+        self.message = str(self.message, encoding='utf-8')          #找遍世界，终于找到可用的方法
+        print(self.message)
+        self.ui.showText.append(self.message)
 
     def closeConnect(self):
         self.tcpSocket.disconnectFromHost()

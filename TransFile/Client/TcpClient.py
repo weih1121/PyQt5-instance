@@ -48,7 +48,7 @@ class Client(QWidget, Ui_Form):
 
             if self.receSize == self.fileSize:
                 self.file.close()
-                QMessageBox(self, '完成', "文件接收完成")
+                box = QMessageBox(self, '完成', "文件接收完成")
 
 
 
