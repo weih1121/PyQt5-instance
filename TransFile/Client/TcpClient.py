@@ -10,10 +10,6 @@ class Client(QWidget, Ui_Form):
         self.ui = Ui_Form()
         self.ui.setupUi(self)
         self.file = QFile()
-        self.fileName = None
-        self.fileSize = None
-        self.receSize = 0
-        self.isStart = False        #判断是不是文件头
 
         self.tcpsocket = QTcpSocket()
         self.ui.pushButton_Connect.clicked.connect(self.ConnectToServer)
@@ -29,30 +25,9 @@ class Client(QWidget, Ui_Form):
         self.ui.textEdit.setText("成功和服务器建立连接")
 
     def HandleReceive(self):
-        buf = bytes()
-        buf = self.tcpsocket.readAll()
-        if self.isStart == False:
-            self.isStart = True
-            #解析头部信息 并且进行初始化工作 再打开文件
-            buf = buf.decode()
-            self.fileName = buf.session('##, 0, 0')
-            self.fileSize = int(buf.session('##', 1, 1))
-
-            self.file.setFileName(self.fileName)
-            isok = self.open(QIODevice.WriteOnly)
-            if False == isok:
-                print('打开文件失败')
-        else:
-            len = self.file.write(buf)
-            self.receSize += len
-
-            if self.receSize == self.fileSize:
-                self.file.close()
-                box = QMessageBox(self, '完成', "文件接收完成")
-
-
-
-
+        with open('../FileRecv/test.txt', 'wb') as f:
+            buf = self.tcpsocket.readAll()
+            f.write(buf)
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

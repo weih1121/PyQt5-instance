@@ -46,7 +46,6 @@ class TcpClient(QWidget, Ui_Form):
         self.message = QByteArray()
         self.message = self.tcpSocket.readAll()
         self.message = str(self.message, encoding='utf-8')          #找遍世界，终于找到可用的方法
-        print(self.message)
         self.ui.showText.append(self.message)
 
     def closeConnect(self):
